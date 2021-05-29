@@ -4,7 +4,7 @@ export interface IPost extends Document {
   title?: string;
   body: string;
   image?: string;
-  comments?: Types.ObjectId[];
+  comments?: string[];
   likes?: number;
   author?: Types.ObjectId;
 }

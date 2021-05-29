@@ -1,7 +1,6 @@
 import UserModel from "../db/models/UserModel";
 import UserClass, { UserData } from "./UserClass";
 import Post from "../Post/Post";
-import { Types } from "mongoose";
 
 export default class User {
   public async createUser(userData: UserData): Promise<UserClass> {
@@ -15,7 +14,7 @@ export default class User {
     return user;
   }
 
-  public async findUserById(userId: Types.ObjectId): Promise<UserClass> {
+  public async findUserById(userId: string): Promise<UserClass> {
     const user = await UserModel.findById(userId)
       .populate("posts")
       .populate("followers")
@@ -48,10 +47,7 @@ export default class User {
     return doc;
   }
 
-  public async editUser(
-    userId: Types.ObjectId,
-    data: object
-  ): Promise<UserClass> {
+  public async editUser(userId: string, data: object): Promise<UserClass> {
     let editedUser = await UserModel.findByIdAndUpdate({ _id: userId }, data, {
       new: true,
     });
@@ -63,7 +59,7 @@ export default class User {
     return new UserClass(editedUser);
   }
 
-  public async deleteUser(userId: Types.ObjectId): Promise<null> {
+  public async deleteUser(userId: string): Promise<null> {
     const user = await UserModel.findByIdAndDelete(userId);
     if (!user) {
       throw new Error("Invalid user id!");
@@ -72,10 +68,7 @@ export default class User {
     return null;
   }
 
-  public async follow(
-    currentUserId: Types.ObjectId,
-    userToFollowId: Types.ObjectId
-  ) {
+  public async follow(currentUserId: string, userToFollowId: string) {
     const currentUser = await this.findUserById(currentUserId);
     const userToFollow = await this.findUserById(userToFollowId);
 
@@ -96,7 +89,7 @@ export default class User {
     });
   }
 
-  public async likePost(postId: Types.ObjectId, userId: Types.ObjectId) {
+  public async likePost(postId: string, userId: string) {
     const post = new Post();
     const foundPost = await post.findPostById(postId);
     const user = await this.findUserById(userId);
@@ -133,5 +126,10 @@ export default class User {
       { _id: userId },
       { $pull: { likedPosts: postId } }
     );
+    const post = new Post();
+    const foundPost = await post.findPostById(postId);
+    await post.updatePost(postId, {
+      likes: foundPost.likes! - 1,
+    });
   }
 }

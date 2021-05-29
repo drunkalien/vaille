@@ -1,16 +1,16 @@
 import { Schema, Document, model, SchemaTypes, Types } from "mongoose";
 
 interface IUser extends Document {
-  _id?: Types.ObjectId;
+  _id?: string;
   username: string;
   email: string;
   password: string;
   profilePic?: string;
   posts?: string[];
-  followers?: Types.ObjectId[];
-  following?: Types.ObjectId[];
-  likedPosts?: Types.ObjectId[];
-  likedComments?: Types.ObjectId[];
+  followers?: string[];
+  following?: string[];
+  likedPosts?: string[];
+  likedComments?: string[];
   createdAt: Date;
   updatedAt: Date;
 }

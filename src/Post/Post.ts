@@ -1,4 +1,3 @@
-import { Types } from "mongoose";
 import PostClass, { PostData } from "./PostClass";
 import PostModel from "../db/models/PostModel";
 
@@ -18,7 +17,7 @@ export default class Post {
     return posts;
   }
 
-  public async findPostById(postId: Types.ObjectId) {
+  public async findPostById(postId: string) {
     const post = await PostModel.findById(postId).populate("author");
     if (!post) {
       throw new Error("Invalid post id!");
@@ -27,10 +26,7 @@ export default class Post {
     return post;
   }
 
-  public async updatePost(
-    postId: Types.ObjectId,
-    data: object
-  ): Promise<object> {
+  public async updatePost(postId: string, data: object): Promise<object> {
     const post = await PostModel.findByIdAndUpdate(postId, data, { new: true });
 
     if (!post) {
@@ -40,7 +36,7 @@ export default class Post {
     return post;
   }
 
-  public async deletePost(postId: Types.ObjectId): Promise<null> {
+  public async deletePost(postId: string): Promise<null> {
     const post = await PostModel.findByIdAndDelete(postId);
     if (!post) {
       throw new Error("Invalid post id!");

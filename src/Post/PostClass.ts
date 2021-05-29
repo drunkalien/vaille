@@ -1,22 +1,21 @@
-import { Types } from "mongoose";
 export interface PostData {
-  _id?: Types.ObjectId;
+  _id?: string;
   title?: string;
   body: string;
   image?: string;
-  comments?: Types.ObjectId[];
+  comments?: string[];
   likes?: number;
-  author?: Types.ObjectId[];
+  author?: string[];
 }
 
 export default class PostClass {
-  _id?: Types.ObjectId;
+  _id?: string;
   title?: string;
   body: string;
   image?: string;
-  comments?: Types.ObjectId[];
+  comments?: string[];
   likes?: number;
-  author?: Types.ObjectId[];
+  author?: string[];
 
   constructor(postData: PostData) {
     this.title = postData.title;
