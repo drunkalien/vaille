@@ -1,4 +1,3 @@
-import { Types } from "mongoose";
 export interface UserData {
   username: string;
   email: string;
