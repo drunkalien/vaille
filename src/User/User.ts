@@ -9,8 +9,8 @@ export default class User {
       throw new Error("User validation failed!");
     }
 
-    const created = await UserModel.create(user);
-    user._id = created._id;
+    const doc = await UserModel.create(user);
+    user._id = doc._id;
     return user;
   }
 
