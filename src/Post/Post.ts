@@ -7,33 +7,36 @@ export default class Post {
     if (!post.validate()) {
       throw new Error("Post validation failed!");
     }
-    const created = await PostModel.create(post);
-    post._id = created._id;
+    const doc = await PostModel.create(post);
+    post._id = doc._id;
     return post;
   }
 
-  public async allPosts() {
+  public async allPosts(): Promise<object[]> {
     const posts = await PostModel.find().populate("author");
     return posts;
   }
 
-  public async findPostById(postId: string) {
+  public async findPostById(postId: string): Promise<PostClass> {
     const post = await PostModel.findById(postId).populate("author");
     if (!post) {
       throw new Error("Invalid post id!");
     }
+    const doc = new PostClass(post);
 
-    return post;
+    return doc;
   }
 
-  public async updatePost(postId: string, data: object): Promise<object> {
+  public async updatePost(postId: string, data: object): Promise<PostClass> {
     const post = await PostModel.findByIdAndUpdate(postId, data, { new: true });
 
     if (!post) {
       throw new Error("Invalid post id!");
     }
 
-    return post;
+    const doc = new PostClass(post);
+
+    return doc;
   }
 
   public async deletePost(postId: string): Promise<null> {
