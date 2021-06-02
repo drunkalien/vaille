@@ -1,4 +1,5 @@
 import { Schema, Document, model, SchemaTypes, Types } from "mongoose";
+import bcrypt from "bcryptjs";
 
 interface IUser extends Document {
   _id?: string;
@@ -70,5 +71,15 @@ const UserSchema = new Schema(
   },
   { timestamps: true }
 );
+
+UserSchema.pre("save", async function (next) {
+  const user = this as IUser;
+  if (this.isModified("password")) {
+    const hash = await bcrypt.hash(user.password, 12);
+    user.password = hash;
+    next();
+  }
+  next();
+});
 
 export default model<IUser>("User", UserSchema);
