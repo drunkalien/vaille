@@ -5,7 +5,7 @@ export interface PostData {
   image?: string;
   comments?: string[];
   likes?: number;
-  author?: string[];
+  author?: string;
 }
 
 export default class PostClass {
@@ -15,7 +15,7 @@ export default class PostClass {
   image?: string;
   comments?: string[];
   likes?: number;
-  author?: string[];
+  author?: string;
 
   constructor(postData: PostData) {
     this.title = postData.title;

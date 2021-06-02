@@ -6,7 +6,7 @@ export interface IPost extends Document {
   image?: string;
   comments?: string[];
   likes?: number;
-  author?: Types.ObjectId;
+  author?: string;
 }
 
 const PostSchema = new Schema({
