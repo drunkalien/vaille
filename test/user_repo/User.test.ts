@@ -43,7 +43,6 @@ describe("user test", () => {
 
     expect(newUser.username).toEqual(userData.username);
     expect(newUser.email).toEqual(userData.email);
-    expect(newUser.password).toEqual(userData.password);
   });
 
   test("finds user by id", async () => {
