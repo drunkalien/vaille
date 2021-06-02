@@ -7,14 +7,10 @@ const post = new Post();
 const addPost = {
   type: PostType,
   args: {
-    title: { type: GraphQLString },
-    body: { type: GraphQLString },
-    image: { type: GraphQLString },
-    author: { type: GraphQLString },
+    data: { type: PostInputType },
   },
   async resolve(parent: any, args: any) {
-    const { title, body, image, author } = args;
-    return await post.createPost({ title, body, image, author });
+    return await post.createPost(args.data);
   },
 };
 
